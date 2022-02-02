@@ -10,6 +10,12 @@ plugins {
 group = "me.shinichi"
 version = "1.0"
 
+tasks {
+    withType<JavaCompile> {
+        options.encoding = Charsets.UTF_8.name()
+    }
+}
+
 repositories {
     google()
     mavenCentral()
