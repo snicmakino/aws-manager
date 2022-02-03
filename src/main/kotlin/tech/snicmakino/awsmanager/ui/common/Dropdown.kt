@@ -1,4 +1,4 @@
-package view
+package tech.snicmakino.awsmanager.ui.common
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
@@ -52,6 +52,8 @@ fun Dropdown() {
         ) {
             options.forEach { selectionOption ->
                 DropdownMenuItem(
+                    modifier = Modifier
+                        .size(250.dp, 32.dp),
                     onClick = {
                         selectedOptionText.value = selectionOption
                         expanded.value = false

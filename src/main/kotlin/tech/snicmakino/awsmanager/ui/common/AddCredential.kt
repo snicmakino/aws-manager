@@ -1,4 +1,4 @@
-package view
+package tech.snicmakino.awsmanager.ui.common
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Button

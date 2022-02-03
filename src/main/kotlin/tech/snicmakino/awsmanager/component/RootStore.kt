@@ -1,4 +1,4 @@
-package view
+package tech.snicmakino.awsmanager.component
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

@@ -24,6 +24,8 @@ repositories {
 
 dependencies {
     implementation(compose.desktop.currentOs)
+    implementation("com.arkivanov.decompose:decompose:0.5.0")
+    implementation("com.arkivanov.decompose:extensions-compose-jetbrains:0.5.0")
 }
 
 tasks.withType<KotlinCompile> {
@@ -32,7 +34,7 @@ tasks.withType<KotlinCompile> {
 
 compose.desktop {
     application {
-        mainClass = "MainKt"
+        mainClass = "tech.snicmakino.awsmanager.MainKt"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "aws-manager"
