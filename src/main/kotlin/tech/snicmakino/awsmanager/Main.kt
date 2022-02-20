@@ -12,7 +12,9 @@ import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.jetbrains.lifecycle.LifecycleController
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
+import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
 import tech.snicmakino.awsmanager.component.AppRootComponent
+import tech.snicmakino.awsmanager.repository.configuration.ConfigurationRepositoryImpl
 import tech.snicmakino.awsmanager.ui.AppRootUi
 
 @ExperimentalDecomposeApi
@@ -21,7 +23,9 @@ fun main() {
 
     val lifecycle = LifecycleRegistry()
     val root = AppRootComponent(
-        DefaultComponentContext(lifecycle = lifecycle)
+        DefaultComponentContext(lifecycle = lifecycle),
+        storeFactory = DefaultStoreFactory(),
+        repository = ConfigurationRepositoryImpl
     )
 
     application {

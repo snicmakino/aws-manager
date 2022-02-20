@@ -11,7 +11,8 @@ import androidx.compose.ui.window.Dialog
 
 @Composable
 internal fun AddCredential(
-    onCloseClicked: () -> Unit
+    onCloseClicked: () -> Unit,
+    onAddCredential: (String, String, String) -> Unit
 ) {
     val name = remember { mutableStateOf("") }
     val key = remember { mutableStateOf("") }
@@ -40,7 +41,9 @@ internal fun AddCredential(
                 singleLine = true
             )
             Button(
-                onClick = {}
+                onClick = {
+                    onAddCredential(name.value, key.value, secret.value)
+                }
             ) { Text("Add") }
         }
     }

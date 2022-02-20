@@ -10,9 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import tech.snicmakino.awsmanager.component.RootStore
+import tech.snicmakino.awsmanager.repository.configuration.Credential
+import kotlin.reflect.KFunction3
 
 @Composable
-fun CredentialSelector() {
+fun CredentialSelector(
+    onSwitchCredential: (Credential) -> Unit,
+    onAddCredential: (String, String, String) -> Unit
+) {
     val model = remember { RootStore() }
     val state = model.state
     Box(
@@ -29,7 +34,8 @@ fun CredentialSelector() {
             ) {
                 state.editingItemId?.also { id ->
                     AddCredential(
-                        onCloseClicked = model::onEditorCloseClicked
+                        onCloseClicked = model::onEditorCloseClicked,
+                        onAddCredential = onAddCredential
                     )
                 }
                 Text(
