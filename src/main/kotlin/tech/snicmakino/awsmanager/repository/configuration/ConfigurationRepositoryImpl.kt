@@ -1,15 +1,13 @@
 package tech.snicmakino.awsmanager.repository.configuration
 
 import com.badoo.reaktive.completable.Completable
-import com.badoo.reaktive.observable.asCompletable
+import com.badoo.reaktive.completable.completableFromFunction
+import com.badoo.reaktive.observable.Observable
 import com.badoo.reaktive.observable.observable
-import com.badoo.reaktive.observable.observeOn
-import com.badoo.reaktive.observable.subscribeOn
-import com.badoo.reaktive.scheduler.ioScheduler
-import com.badoo.reaktive.scheduler.mainScheduler
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.encodeToStream
+import tech.snicmakino.awsmanager.domain.model.AwsCredential
 import tech.snicmakino.awsmanager.domain.repository.ConfigurationRepository
 import java.nio.file.Files
 import java.nio.file.Path
@@ -31,19 +29,17 @@ object ConfigurationRepositoryImpl : ConfigurationRepository {
     }
 
     override fun addCredential(name: String, key: String, secret: String): Completable {
-        return observable<Any> {
-            val uuid = UUID.randomUUID().toString()
-
+        return completableFromFunction {
             val filestr = String(Files.readAllBytes(credentialFile))
             val configuration = if (filestr.isEmpty()) {
                 Configuration(emptyList())
             } else {
-                Json.decodeFromString<Configuration>(
+                Json.decodeFromString(
                     String(Files.readAllBytes(credentialFile))
                 )
             }
             configuration.credentials += Credential(
-                uuid,
+                UUID.randomUUID().toString(),
                 name,
                 key,
                 secret
@@ -54,15 +50,28 @@ object ConfigurationRepositoryImpl : ConfigurationRepository {
                 Files.newOutputStream(credentialFile, TRUNCATE_EXISTING)
             )
         }
-            .subscribeOn(ioScheduler)
-            .observeOn(mainScheduler)
-            .asCompletable()
     }
 
-    fun add(name: String, key: String, secret: String) {
+    override fun getCredentials(): Observable<List<AwsCredential>> {
+        return observable {
+            val filestr = String(Files.readAllBytes(credentialFile))
+            val configuration = if (filestr.isEmpty()) {
+                Configuration(emptyList())
+            } else {
+                Json.decodeFromString(
+                    String(Files.readAllBytes(credentialFile))
+                )
+            }
+            it.onNext(
+                configuration.credentials.map { credential ->
+                    AwsCredential(
+                        credential.id,
+                        credential.name,
+                        credential.awsAccessKeyId,
+                        credential.awsSecretAccessKey
+                    )
+                }
+            )
+        }
     }
-
-//    fun updateCredential(credential: Credential) {
-//        credentials = credentials.map { if (it.id == credential.id) credential else it } as MutableList<Credential>
-//    }
 }

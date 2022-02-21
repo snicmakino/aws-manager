@@ -6,12 +6,8 @@ import tech.snicmakino.awsmanager.repository.configuration.Credential
 
 interface AppRoot {
     val routerState: Value<RouterState<*, Child>>
-
-    val credential: Value<Credential>
-
+    val credentialManage: CredentialManage
     fun onSwitchCredential(credential: Credential)
-
-    fun onAddCredential(name: String, key: String, secret: String)
 
     sealed class Child {
         data class Ec2Content(val component: Ec2) : Child()

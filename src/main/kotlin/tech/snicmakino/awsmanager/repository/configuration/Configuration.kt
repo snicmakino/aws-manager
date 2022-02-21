@@ -8,7 +8,7 @@ data class Configuration(var credentials: List<Credential>)
 @Serializable
 data class Credential(
     val id: String,
-    private val name: String,
-    private val awsAccessKeyId: String,
-    private val awsSecretAccessKey: String
+    val name: String,
+    val awsAccessKeyId: String,
+    val awsSecretAccessKey: String
 )

@@ -22,12 +22,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import tech.snicmakino.awsmanager.domain.model.AwsCredential
 
 @Composable
-fun Dropdown() {
-    val options = listOf("Option 1", "Option 2", "Option 3", "Option 4", "Option 5")
+fun Dropdown(credentials: List<AwsCredential>) {
+    println(credentials)
     val expanded = remember { mutableStateOf(false) }
-    val selectedOptionText = remember { mutableStateOf(options[0]) }
+    val selectedOptionText = remember { mutableStateOf("") }
 
     Box(
         contentAlignment = Alignment.CenterStart,
@@ -50,16 +51,16 @@ fun Dropdown() {
             expanded = expanded.value,
             onDismissRequest = { expanded.value = false }
         ) {
-            options.forEach { selectionOption ->
+            credentials.forEach { credential ->
                 DropdownMenuItem(
                     modifier = Modifier
                         .size(250.dp, 32.dp),
                     onClick = {
-                        selectedOptionText.value = selectionOption
+                        selectedOptionText.value = credential.name
                         expanded.value = false
                     }
                 ) {
-                    Text(text = selectionOption)
+                    Text(text = credential.name)
                 }
             }
         }

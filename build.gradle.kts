@@ -30,10 +30,10 @@ dependencies {
     implementation("com.arkivanov.decompose:decompose:0.5.0")
     implementation("com.arkivanov.mvikotlin:mvikotlin:3.0.0-beta01")
     implementation("com.arkivanov.mvikotlin:mvikotlin-main:3.0.0-beta01")
+    implementation("com.arkivanov.mvikotlin:rx:3.0.0-beta01")
     implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-reaktive:3.0.0-beta01")
     implementation("com.badoo.reaktive:reaktive:1.2.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
-
     implementation("aws.sdk.kotlin:aws-core-jvm:0.12.0-beta")
     implementation("aws.sdk.kotlin:ec2:0.12.0-beta")
 

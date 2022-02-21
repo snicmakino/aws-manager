@@ -12,7 +12,7 @@ fun AppRootUi(component: AppRoot) {
         Column {
             CredentialSelector(
                 onSwitchCredential = component::onSwitchCredential,
-                onAddCredential = component::onAddCredential
+                component = component.credentialManage
             )
             when (val child = it.instance) {
                 is AppRoot.Child.Ec2Content -> Ec2Ui(child.component)
