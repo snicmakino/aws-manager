@@ -12,13 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
-import tech.snicmakino.awsmanager.component.CredentialManage
-import tech.snicmakino.awsmanager.repository.configuration.Credential
+import tech.snicmakino.awsmanager.component.ConnectionComponent
 
 @Composable
 fun CredentialSelector(
-    onSwitchCredential: (Credential) -> Unit,
-    component: CredentialManage
+    component: ConnectionComponent
 ) {
     val model by component.models.subscribeAsState()
     val (open, setOpen) = remember { mutableStateOf(false) }
@@ -29,7 +27,10 @@ fun CredentialSelector(
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Dropdown(credentials = model.credentials)
+            Dropdown(
+                credentials = model.credentials,
+                onSelect = component.onCredentialSelect
+            )
             Spacer(Modifier.width(10.dp))
             Button(
                 onClick = { setOpen(true) },

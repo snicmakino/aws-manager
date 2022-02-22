@@ -8,10 +8,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import tech.snicmakino.awsmanager.component.Ec2
+import tech.snicmakino.awsmanager.component.Ec2Component
 
 @Composable
-fun Ec2Ui(component: Ec2) {
+fun Ec2Ui(component: Ec2Component) {
     Column(
         modifier = Modifier.padding(top = 10.dp)
     ) {

@@ -3,9 +3,9 @@ package tech.snicmakino.awsmanager.component
 import com.arkivanov.decompose.value.Value
 import tech.snicmakino.awsmanager.domain.model.AwsCredential
 
-interface CredentialManage {
+interface ConnectionComponent {
     val models: Value<Model>
-    val selectedCredential: Value<AwsCredential>
+    val onCredentialSelect: (credential: AwsCredential) -> Unit
     fun addCredential(name: String, key: String, secret: String)
 
     data class Model(

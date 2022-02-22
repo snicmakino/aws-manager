@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import tech.snicmakino.awsmanager.domain.model.AwsCredential
 
 @Composable
-fun Dropdown(credentials: List<AwsCredential>) {
+fun Dropdown(credentials: List<AwsCredential>, onSelect: (credential: AwsCredential) -> Unit) {
     val expanded = remember { mutableStateOf(false) }
     val selectedOptionText = remember { mutableStateOf("") }
 
@@ -57,6 +57,7 @@ fun Dropdown(credentials: List<AwsCredential>) {
                     onClick = {
                         selectedOptionText.value = credential.name
                         expanded.value = false
+                        onSelect(credential)
                     }
                 ) {
                     Text(text = credential.name)
