@@ -1,12 +1,13 @@
-# aws-manager
+# WIP: aws-manager
 
-AWSのコンピューティング系のリソースの簡単な管理を行えるデスクトップアプリケーション
+This project is under development.
+
+Windows desktop app what to manage of aws computing resources.
 
 ## Roadmap
 
-- EC2の管理
-
-- ECSの管理
+- EC2 Management
+- ECS Management
 
 
 ## License
