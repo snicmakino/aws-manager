@@ -5,10 +5,12 @@ import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.reaktive.ReaktiveExecutor
+import com.badoo.reaktive.observable.map
 import com.badoo.reaktive.observable.observeOn
 import com.badoo.reaktive.scheduler.mainScheduler
 import tech.snicmakino.awsmanager.component.store.CredentialStore.Intent
 import tech.snicmakino.awsmanager.component.store.CredentialStore.State
+import tech.snicmakino.awsmanager.domain.model.AwsCredential
 import tech.snicmakino.awsmanager.domain.repository.ConfigurationRepository
 
 internal class CredentialStoreProvider(
@@ -26,16 +28,17 @@ internal class CredentialStoreProvider(
         ) {}
 
     private sealed class Result {
+        data class Loaded(val items: List<AwsCredential>) : Result()
         data class Added(val isDone: Boolean) : Result()
     }
 
     private inner class ExecutorImpl : ReaktiveExecutor<Intent, Unit, State, Result, Nothing>() {
-
         override fun executeAction(action: Unit, getState: () -> State) {
             configurationRepository
                 .getCredentials()
                 .observeOn(mainScheduler)
-                .subscribeScoped()
+                .map(Result::Loaded)
+                .subscribeScoped(onNext = ::dispatch)
         }
 
         override fun executeIntent(intent: Intent, getState: () -> State): Unit =
@@ -43,7 +46,6 @@ internal class CredentialStoreProvider(
                 is Intent.Add -> add(intent.name, intent.key, intent.secret)
                 is Intent.Delete -> TODO()
                 is Intent.Edit -> TODO()
-                is Intent.List -> TODO()
             }
 
         private fun add(name: String, key: String, secret: String) {
@@ -56,6 +58,7 @@ internal class CredentialStoreProvider(
     private object ReducerImpl : Reducer<State, Result> {
         override fun State.reduce(msg: Result): State =
             when (msg) {
+                is Result.Loaded -> copy(credentials = msg.items)
                 is Result.Added -> copy(isDone = msg.isDone)
             }
     }

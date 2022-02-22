@@ -26,7 +26,6 @@ import tech.snicmakino.awsmanager.domain.model.AwsCredential
 
 @Composable
 fun Dropdown(credentials: List<AwsCredential>) {
-    println(credentials)
     val expanded = remember { mutableStateOf(false) }
     val selectedOptionText = remember { mutableStateOf("") }
 

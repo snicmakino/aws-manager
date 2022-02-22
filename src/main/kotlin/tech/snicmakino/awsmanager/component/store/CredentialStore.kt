@@ -7,12 +7,6 @@ import tech.snicmakino.awsmanager.domain.model.AwsCredential
 
 internal interface CredentialStore : Store<Intent, State, Nothing> {
     sealed class Intent {
-        data class List(
-            val name: String,
-            val key: String,
-            val secret: String
-        ) : Intent()
-
         data class Add(
             val name: String,
             val key: String,
@@ -36,6 +30,3 @@ internal interface CredentialStore : Store<Intent, State, Nothing> {
         val isDone: Boolean = false
     )
 }
-
-
-
